@@ -14,6 +14,13 @@ class SiteInfo(Model):
     def __str__(self):
         return self.name
 
-class Test():
-    def __init__(self) -> None:
-        print('test init')
+class Category(Model):
+    id = fields.IntField(pk=True)
+    name = fields.TextField()
+    cd = fields.TextField()
+
+    class Meta:
+        table = "t_category_cd"
+
+    def __str__(self):
+        return self.name
