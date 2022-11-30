@@ -24,3 +24,21 @@ class Category(Model):
 
     def __str__(self):
         return self.name
+
+
+class Product(Model):
+    id = fields.IntField(pk=True)
+    name = fields.TextField()
+    img = fields.TextField()
+    url = fields.TextField()
+    title = fields.TextField()
+    category = fields.TextField()
+    info = fields.TextField()
+    reg_dttm = fields.DatetimeField()
+
+    class Meta:
+        table = "t_domelist"
+        
+    def __str__(self):
+        return self.name
+    
