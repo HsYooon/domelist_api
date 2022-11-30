@@ -39,7 +39,11 @@ def categories():
 
 @app.route('/imweb/regist_product')
 async def regist_product():
+    print("__3_______________________")
     result = await dao.products()
+    print("__1_______________________")
+    print(result)
+    print("__2_______________________")
     request_cnt = 0
     for i in result:
         if request_cnt >= 5:
@@ -48,9 +52,18 @@ async def regist_product():
         content = f'<div style="text-align: center;"><h3>[{i["name"]}] - {i["title"]} </h3><h4 style="color: orange;">&#11015; 클릭시 해당 도매사이트로 이동합니다</h4><h4><a href="{i["url"]}" style="text-decoration: underline;"target="_blank">상세보기</a></h4></div>'
         api.register_prodect(i['category_name'], i['img'], i['title'], content, content, i['info'])
         request_cnt += 1
-    return jsonify(result)
+    return 'hey~'
 
-@app.route('/imweb/delete_product/<id>')
-def delete_product(id=None):
-    result = api.delete_product(id=id)
-    return result
+@app.route('/imweb/delete_product')
+def delete_product():
+    start_id = 112
+    end_id = 123
+    
+    request_count = 0
+    for i in range(start_id, end_id+1):
+        if request_count >= 5:
+            sleep(1)
+            request_count = 0
+        api.delete_product(id=i)
+        request_count += 1
+    return 'result'

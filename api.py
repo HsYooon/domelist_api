@@ -19,7 +19,6 @@ class Api:
                 method='GET', url=IMWEB_TOKEN_URL, fields=data)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            print(result)
             return result['access_token']
         return ''
 
