@@ -12,6 +12,16 @@ IMWEB_SHOWCASE_URL = 'https://api.imweb.me/v2/shop/showcases'
 http = urllib3.PoolManager()
 
 class Api:
+    header_dict = {}
+    categories_dict = {}
+
+    def __init__(self):
+        self.header_dict = self.make_header()
+        self.categories_dict = self.categories()
+        print(self.header_dict)
+        print(self.categories_dict)
+
+
     # create token
     def request_token(self):
         data = {'key': KEY, 'secret': SECRET}
@@ -19,6 +29,7 @@ class Api:
                 method='GET', url=IMWEB_TOKEN_URL, fields=data)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
+            print(result)
             return result['access_token']
         return ''
 
@@ -36,21 +47,22 @@ class Api:
 
     # get category
     def categories(self):
-        header = self.make_header()
         response = http.request(
-                method='GET', url=IMWEB_CATEGORIES_URL, headers=header)
+                method='GET', url=IMWEB_CATEGORIES_URL, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
             print(result)
-            return result['data'][0]['list']
+            category = {}
+            for i in result['data'][0]['list']:
+                category[i['name']] = i['code']
+            return category
         return ''
 
     # delete product
     def delete_product(self, id):
         IMWEB_PRODUCT_DELETE_URL = IMWEB_PRODUCT_URL + '/' +str(id)
-        header = self.make_header()
         response = http.request(
-            method = 'DELETE', url=IMWEB_PRODUCT_DELETE_URL, headers=header)
+            method = 'DELETE', url=IMWEB_PRODUCT_DELETE_URL, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
             print(result)
@@ -71,7 +83,6 @@ class Api:
 
     # 상품 등록 badge_type : new(신상품), best(베스트)
     def register_prodect(self, category_name, image_url, title, simple_content, content, badge_type):
-        header = self.make_header()
         '''
         {'IT/디지털': 's202110266ac024654e5f9',
         '종합': 's2022112744dcfd7303c71',
@@ -88,11 +99,7 @@ class Api:
         '인테리어/소품': 's202211276b2e6087ef1b3'}
         '''
         # 아임웹 카테고리 코드 조회 후 dictionary로 변경
-        result = self.categories()
-        category = {}
-        for i in result:
-            category[i['name']] = i['code']
-        print(category)
+        category = self.categories_dict
 
         is_badge_new = False
         is_badge_best = False
@@ -170,7 +177,7 @@ class Api:
         }
         json_body = json.dumps(data).encode('utf-8')
         response = http.request(
-            method='POST', url=IMWEB_INSERT_PRODUCT_URL, body=json_body, headers=header)
+            method='POST', url=IMWEB_INSERT_PRODUCT_URL, body=json_body, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
             print(result)

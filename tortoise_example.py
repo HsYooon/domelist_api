@@ -36,8 +36,7 @@ class Dao:
     async def products(self):
         conn = Tortoise.get_connection("default")
         sql = '''SELECT td.id, td.name, td.img, td.url, td.title, tcc.name as category_name, td.info, DATE_FORMAT(now(), "%Y-%m-%d") as date
-        from t_domelist td inner join t_category_cd tcc on td.category = tcc.cd
-        limit 20'''
+        from t_domelist td inner join t_category_cd tcc on td.category = tcc.cd limit 100'''
         val = await conn.execute_query_dict(sql)
         conn.close()
         return val
