@@ -16,11 +16,15 @@ class Api:
     categories_dict = {}
 
     def __init__(self):
-        self.header_dict = self.make_header()
+        #self.header_dict = self.make_header()
+        self.header_dict = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'access-token': "error token",
+            }
         self.categories_dict = self.categories()
-        print(self.header_dict)
-        print(self.categories_dict)
-
+        #print(self.header_dict)
+        #print(self.categories_dict)
 
     # create token
     def request_token(self):
@@ -44,6 +48,17 @@ class Api:
             }
             return header
         return ''
+    # check response
+    def response_handler(self, response):
+        code = response['code']
+        if code == 200:
+            print(response)
+            return
+        elif code == -2:
+            print("에러토큰 토큰 다시 요청하기")
+            self.header_dict = self.make_header()
+            return 'error'
+
 
     # get category
     def categories(self):
@@ -51,11 +66,16 @@ class Api:
                 method='GET', url=IMWEB_CATEGORIES_URL, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            print(result)
-            category = {}
-            for i in result['data'][0]['list']:
-                category[i['name']] = i['code']
-            return category
+            handler = self.response_handler(result)
+            if handler:
+                return
+            else:
+                category = {}
+                for i in result['data'][0]['list']:
+                    category[i['name']] = i['code']
+                return category
+        else:
+            print("error in api.categories")
         return ''
 
     # delete product
