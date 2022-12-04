@@ -139,7 +139,6 @@ class Api:
                 is_badge_new = True
             if i == '12':
                 is_badge_best = True
-
         data = {
             'categories':[category[category_name]],
             #'showcase' : ['c202112036b270300a476b'],

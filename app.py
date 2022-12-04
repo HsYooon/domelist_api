@@ -43,18 +43,16 @@ async def regist_product():
             sleep(1)
             request_cnt = 0
         content = f'<div style="text-align: center;"><h3>[{i["name"]}] - {i["title"]} </h3><h4 style="color: orange;">&#11015; 클릭시 해당 도매사이트로 이동합니다</h4><h4><a href="{i["url"]}" style="text-decoration: underline;"target="_blank">상세보기</a></h4></div>'
-        api.register_prodect(i['category_name'], i['img'], i['title'], content, content, i['info'])
+        api.register_prodect(i['category_name'], i['img'], i['title'], content, content, [i['info']])
         request_cnt += 1
         product_cnt += 1
     return 'hey~'
 
 @app.route('/imweb/delete_product')
-def delete_product():
-    start_id = 99
-    end_id = 178
-
+@app.route('/imweb/delete_product/<start>/<end>')
+def delete_product(start=None, end=None):
     request_count = 0
-    for i in range(start_id, end_id+1):
+    for i in range(int(start), int(end)+1):
         if request_count >= 5:
             sleep(1)
             request_count = 0
