@@ -13,18 +13,26 @@ http = urllib3.PoolManager()
 
 class Api:
     header_dict = {}
+    '''
+    {'IT/디지털': 's202110266ac024654e5f9',
+    '종합': 's2022112744dcfd7303c71',
+    '식품': 's202211272c11491fce9e7',
+    '헬스케어/뷰티': 's202211272d2fa89b7a78f',
+    '산업': 's202211279d64a3a0c7a66',
+    '애완': 's2022112725caf84a54e73',
+    '디지털/가전': 's20221127d1a14776da386',
+    '완구/유아': 's202211273d24eb8b62d55',
+    '의류': 's20221127cdf309de4dbab',
+    '신발/잡화': 's202211275847a45e520ad',
+    '자동차': 's20211203acab339fa5773',
+    '생활': 's2021120390a3eb54d802c',
+    '인테리어/소품': 's202211276b2e6087ef1b3'}
+    '''
     categories_dict = {}
 
     def __init__(self):
-        #self.header_dict = self.make_header()
-        self.header_dict = {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'access-token': "error token",
-            }
+        self.header_dict = self.make_header()
         self.categories_dict = self.categories()
-        #print(self.header_dict)
-        #print(self.categories_dict)
 
     # create token
     def request_token(self):
@@ -33,7 +41,7 @@ class Api:
                 method='GET', url=IMWEB_TOKEN_URL, fields=data)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            print(result)
+            print(f'Api.request_token : {result}')
             return result['access_token']
         return ''
 
@@ -46,16 +54,17 @@ class Api:
                 'Accept': 'application/json',
                 'access-token': token,
             }
+            print(f'Api.make_header : {header}')
             return header
         return ''
+
     # check response
     def response_handler(self, response):
         code = response['code']
         if code == 200:
-            print(response)
-            return
+            return ''
         elif code == -2:
-            print("에러토큰 토큰 다시 요청하기")
+            print(f'Api.response_handler : get access token again')
             self.header_dict = self.make_header()
             return 'error'
 
@@ -66,59 +75,55 @@ class Api:
                 method='GET', url=IMWEB_CATEGORIES_URL, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            handler = self.response_handler(result)
-            if handler:
-                return
+            error = self.response_handler(result)
+            if error:
+                return ''
             else:
                 category = {}
                 for i in result['data'][0]['list']:
                     category[i['name']] = i['code']
                 return category
         else:
-            print("error in api.categories")
+            print(f'Api.categories : {response.status}')
         return ''
 
     # delete product
     def delete_product(self, id):
-        IMWEB_PRODUCT_DELETE_URL = IMWEB_PRODUCT_URL + '/' +str(id)
+        url = IMWEB_PRODUCT_URL + '/' +str(id)
         response = http.request(
-            method = 'DELETE', url=IMWEB_PRODUCT_DELETE_URL, headers=self.header_dict)
+            method = 'DELETE', url=url, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            print(result)
+            error = self.response_handler(result)
+            if error:
+                return ''
+            else:
+                print(f'Api.delete_product : {result}')
             return result
+        else:
+            print(f'Api.categories : {response.status}')
         return ''
 
 
     # select products
     def products(self):
-        header = self.make_header()
         response = http.request(
-            method='GET', url=IMWEB_PRODUCT_URL, headers=header)
+            method='GET', url=IMWEB_PRODUCT_URL, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            print(result)
+            error = self.response_handler(result)
+            if error:
+                return ''
+            else:
+                print(f'Api.products : {result}')
             return result['data']
+        else:
+            print(f'Api.products : {response.status}')
         return ''
 
     # 상품 등록 badge_type : new(신상품), best(베스트)
     def register_prodect(self, category_name, image_url, title, simple_content, content, badge_type):
-        '''
-        {'IT/디지털': 's202110266ac024654e5f9',
-        '종합': 's2022112744dcfd7303c71',
-        '식품': 's202211272c11491fce9e7',
-        '헬스케어/뷰티': 's202211272d2fa89b7a78f',
-        '산업': 's202211279d64a3a0c7a66',
-        '애완': 's2022112725caf84a54e73',
-        '디지털/가전': 's20221127d1a14776da386',
-        '완구/유아': 's202211273d24eb8b62d55',
-        '의류': 's20221127cdf309de4dbab',
-        '신발/잡화': 's202211275847a45e520ad',
-        '자동차': 's20211203acab339fa5773',
-        '생활': 's2021120390a3eb54d802c',
-        '인테리어/소품': 's202211276b2e6087ef1b3'}
-        '''
-        # 아임웹 카테고리 코드 조회 후 dictionary로 변경
+
         category = self.categories_dict
 
         is_badge_new = False
@@ -200,6 +205,10 @@ class Api:
             method='POST', url=IMWEB_INSERT_PRODUCT_URL, body=json_body, headers=self.header_dict)
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
-            print(result)
+            error = self.response_handler(result)
+            if error:
+                return ''
+            else:
+                print(f'Api.register_prodect : {result}')
             return result
         return ''
