@@ -3,7 +3,7 @@ from flask import Flask, g, render_template, jsonify
 import json
 import urllib3
 from api import Api
-from tortoise_example import Dao
+from dao import Dao
 
 app = Flask(__name__)
 
@@ -30,16 +30,22 @@ def categories():
 
 @app.route('/imweb/regist_product')
 async def regist_product():
-    result = await dao.products()
-    print(result)
+    products = await dao.products()
+    print(f'total products count : {len(products)}')
+    print(f'{products}')
     request_cnt = 0
-    for i in result:
+    product_cnt = 0
+    for i in products:
+        if product_cnt % 100 == 0:
+            print(f"products count : {product_cnt}")
+            sleep(5)
         if request_cnt >= 5:
             sleep(1)
             request_cnt = 0
         content = f'<div style="text-align: center;"><h3>[{i["name"]}] - {i["title"]} </h3><h4 style="color: orange;">&#11015; 클릭시 해당 도매사이트로 이동합니다</h4><h4><a href="{i["url"]}" style="text-decoration: underline;"target="_blank">상세보기</a></h4></div>'
         api.register_prodect(i['category_name'], i['img'], i['title'], content, content, i['info'])
         request_cnt += 1
+        product_cnt += 1
     return 'hey~'
 
 @app.route('/imweb/delete_product')
