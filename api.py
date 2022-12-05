@@ -1,5 +1,6 @@
 import urllib3
 import json
+import requests
 
 KEY = '17ceed59232920002ba149d263762170f0cbea5fd1'
 SECRET = 'a82ad172206b48d146a426'
@@ -210,4 +211,17 @@ class Api:
             else:
                 print(f'Api.register_prodect : {result}')
             return result
+        return ''
+
+    def update_product(self):
+        '''/v2/shop/products/{상품번호}'''
+        url = IMWEB_INSERT_PRODUCT_URL + '/'+ str(7727)
+        data = {
+            'name' : "코코"
+        }
+        json_body = json.dumps(data).encode('utf-8')
+        res = requests.patch(url, data=data)
+        # response = http.request(
+        #     method='POST', url=IMWEB_INSERT_PRODUCT_URL, body=json_body, headers=self.header_dict)
+        print(res)
         return ''

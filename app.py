@@ -60,6 +60,11 @@ def delete_product(start=None, end=None):
         request_count += 1
     return 'result'
 
+@app.route('/imweb/update_product')
+def update_product():
+    api.update_product()
+    return 'update'
+
 # @app.before_request
 # def before():
 #     g.token = "0a13d3cc6a45c4029c31d8b0bbcfa2c6"
