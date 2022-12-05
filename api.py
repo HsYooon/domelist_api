@@ -219,8 +219,9 @@ class Api:
         data = {
             'name' : "코코"
         }
+        print(url)
         json_body = json.dumps(data).encode('utf-8')
-        res = requests.patch(url, data=data)
+        res = requests.patch(url, data=json_body,headers=self.header_dict)
         # response = http.request(
         #     method='POST', url=IMWEB_INSERT_PRODUCT_URL, body=json_body, headers=self.header_dict)
         print(res)
