@@ -77,6 +77,7 @@ class Api:
         if response.status == 200:
             result = json.loads(response.data.decode('utf8'))
             error = self.response_handler(result)
+            print(result)
             if error:
                 return ''
             else:
@@ -121,6 +122,82 @@ class Api:
         else:
             print(f'Api.products : {response.status}')
         return ''
+
+    def register_siteinfo(self, img_url, name):
+        '''prod_status = nosale '''
+        data = {
+            'categories':['s20220218dbff5d67e1a21'],
+            #'showcase' : ['c202112036b270300a476b'],
+            'images' : [img_url],
+            'name' : name,
+            'simple_content' : '',
+            'content' : '',
+            'use_mobile_prod_content' : False,
+            'mobile_content' : '',
+            'prod_status' : 'nosale',
+            'prod_type' : 'normal',
+            #'subscribe_group_code' : '',
+            #'subscribe_period' : 120,
+            'is_badge_new' : False,
+            'is_badge_best' : False,
+            'is_badge_md' : False,
+            'is_badge_hot' : False,
+            'origin' : '',
+            'maker' : '',
+            'brand' : '',
+            'seo_title' : '',
+            'seo_description' : '',
+            'seo_access_bot' : True,
+            'price' : 0,
+            'price_org' : 0,
+            'price_tax' : False,
+            'price_none' : True,
+            #'prodinfo' : [],
+            'give_point_type' : 'common',
+            'give_point_value_type' :'percent',
+            #'give_point_value' : 0,
+            #'product_discount_options' : [],
+            #'period_discount_data' : [],
+            'use_pre_sale' : False,
+            #'pre_sale_start_date' : '',
+            #'pre_sale_end_date' : '',
+            'weight' : 0,
+            # 자체 상품 코드'custom_prod_code' : '1a1',
+            #'pay_product_name' : '',
+            #'event_words' : '',
+            #'naver_category' : '',
+            #'condition' : '',
+            'product_flag' : '도매',
+            'order_made' : False,
+            'parallel_import' : False,
+            'import_flag' : False,
+            'is_culture_benefit' : False,
+            'minimum_purchase_quantity' : 1,
+            'member_maximum_purchase_quantity' : 100,
+            'optional_limit_type' : 'relative',
+            'optional_limit' : 100,
+            'use_unipass_number' : 'N',
+            'adult' : False,
+            #'display' : [],
+            'stock_use' : False,
+            'stock_unlimit' : False,
+            #'stock_no_option' : 1000,
+            'sku_no_option' : 'T1',
+            #'options' : [],
+        }
+        json_body = json.dumps(data).encode('utf-8')
+        response = http.request(
+            method='POST', url=IMWEB_INSERT_PRODUCT_URL, body=json_body, headers=self.header_dict)
+        if response.status == 200:
+            result = json.loads(response.data.decode('utf8'))
+            error = self.response_handler(result)
+            if error:
+                return ''
+            else:
+                print(f'Api.register_siteinfo : {result}')
+            return result
+        return ''
+
 
     # 상품 등록 badge_type : new(신상품), best(베스트)
     def register_prodect(self, category_name, image_url, title, simple_content, content, badge_type):

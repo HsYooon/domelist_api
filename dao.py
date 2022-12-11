@@ -42,6 +42,13 @@ class Dao:
         conn.close()
         return val
 
+    async def sites(self):
+        conn = Tortoise.get_connection("default")
+        sql = '''select * from t_siteinfo where id < 5'''
+        val = await conn.execute_query_dict(sql)
+        conn.close()
+        return val
+
 
 # run_async is a helper function to run simple async Tortoise scripts.
 # run_async(init())

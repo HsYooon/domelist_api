@@ -48,6 +48,25 @@ async def regist_product():
         product_cnt += 1
     return 'hey~'
 
+@app.route('/imweb/regist_siteinfo')
+async def regist_siteinfo():
+    sites = await dao.sites()
+    print(f'{sites}')
+    request_cnt = 0
+    site_cnt = 0
+    for i in sites:
+        if site_cnt % 100 == 0:
+            print(f"sites count : {site_cnt}")
+            sleep(5)
+        if request_cnt >= 5:
+            sleep(1)
+            request_cnt = 0
+        img_url = 'https://www.domaelist.com/img/site/' + f'{i["img"]}'
+        api.register_siteinfo(img_url, i['name'])
+        request_cnt += 1
+        site_cnt += 1
+    return 'regist_siteinfo'
+
 @app.route('/imweb/delete_product')
 @app.route('/imweb/delete_product/<start>/<end>')
 def delete_product(start=None, end=None):

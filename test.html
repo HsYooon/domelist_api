@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+    .c1_sub{
+        width: 100%;
+        height: auto;
+        text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;
+        margin-bottom: 8rem;
+    }
+    .c1_sub a{text-decoration: none;color:#000;}
+    .c1_sub img{border:0 ;}
+    .c1_sub ul{list-style: none;}
+    .c1_sub .container{
+        width: 70%;
+        padding: 25px 0;
+    }
+    .c1_sub h3{
+        text-align: left;
+        width: 100%;
+        padding-top: 80px;
+        font-size: 1.2rem;
+        letter-spacing: -.03125rem;
+        line-height: 3.25rem;
+        margin: 0 auto;
+        font-weight: normal;
+    }
+    .c1_sub p{
+        text-align: left;
+        padding: 20px 10px;
+        margin-bottom: 50px;
+        display: block;
+        white-space: normal;
+        line-height: 1.6;
+    }
+
+    .c1_sub .lank_txt{
+        width: 100%;
+        text-align: left;
+        height: auto;
+        padding: 2%;
+        border-left: 2px solid #ccc;
+        margin: 4rem 0;
+        display: flex;
+    }
+    .c1_sub .lank_txt h4{
+        margin-top: 4rem;
+        width: 100%;
+        font-size: 1.125rem;
+        font-weight: 400;
+    }
+    .c1_sub .lank_txt ul.sitelank{
+        margin: 0.5rem 1rem;
+        width: 100%;
+        color: #212121;
+    }
+    .c1_sub .lank_txt ul.sitelank li{
+        margin: 0.25rem;
+        text-align: center;
+    }
+    .c1_sub .lank_txt ul.sitelank li:hover{
+        text-decoration: underline;
+        background-color: #eee;
+    }
+
+
+    .c1_sub ul.sitelist{
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .c1_sub ul.sitelist li{
+        width: 23%;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        border: 0.0625rem solid #eee;
+        transition: all 0.3s;
+        overflow: hidden;
+    }
+    .c1_sub ul.sitelist li:nth-child(4n){
+        margin-right: 0;
+    }
+    .c1_sub ul.sitelist li:hover{
+        box-shadow: 1.5px 3px 0px 0px rgba(150, 150, 150, 0.377);
+    }
+    .c1_sub ul.sitelist li a{
+        display: block;
+        margin: 0 auto;
+        text-align: left;
+    }
+    .c1_sub ul.sitelist li a .inner_img{
+        width: 100%;
+        overflow: hidden;
+        height: auto;
+    }
+    .c1_sub ul.sitelist li a .inner_img img{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    .c1_sub ul.sitelist li a .inner_txt h3{
+        padding: 3%;
+        font-weight: normal;
+    }
+    .c1_sub ul.sitelist li a .inner_txt p{
+        display: block;
+        margin-bottom: 0;
+        padding: 5%;
+        font-weight: 400;
+        color: #212121;
+        font-size: 0.8em;
+        line-height: 1.5rem;
+    }
+
+    /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+    @media all and (min-width:768px) and (max-width:1023px){
+        .c1_sub h2{
+            padding-top: 2rem;
+            font-size: 2rem;
+        }
+        .c1_sub ul.sitelist li{
+            width: 30%;
+        }
+        .c1_sub .lank_txt h4{
+            margin-top: 3rem;
+        }
+        .c1_sub ul.sitelist li{
+            width: 30%;
+        }
+        .c1_sub ul.sitelist li a .inner_img{
+            height: 100px;
+        }
+
+    }
+
+    /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+    @media all and (max-width:767px){
+        .c1_sub .container{
+            width: 70%;
+        }
+        .c1_sub h2{
+            font-size: 1.25rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .c1_sub p{
+            font-size: 0.75rem;
+            margin-bottom: 12%;
+            padding: 0;
+            line-height: 1.8;
+        }
+        .c1_sub .lank_txt{
+            width: 95%;
+            display: inline;
+            text-align: center;
+            border-left: 0;
+        }
+        .c1_sub .lank_txt h4{
+            width: 100%;
+            font-size: 1rem;
+            margin: 2rem 0;
+            border-top: 2px solid #ccc;
+            padding-top: 2rem;
+        }
+        .c1_sub .lank_txt ul.sitelank{
+            width: 100%;
+            margin:0;
+        }
+        .c1_sub .lank_txt ul.sitelank li{
+            font-size: 0.8rem;
+            height: 3rem;
+            margin: 0.5rem;
+        }
+        .c1_sub ul.sitelist{
+            display:inline;
+            flex-wrap: nowrap;
+            width: 85%;
+        }
+        .c1_sub ul.sitelist li{
+            width: 100%;
+            margin: 7% auto;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 2px solid #eee;
+        }
+        .c1_sub ul.sitelist li a .inner_img{
+            height: 90px;
+            overflow: hidden;
+        }
+        .c1_sub ul.sitelist li .inner_txt{
+            height: 100px;
+        }
+        .c1_sub ul.sitelist li .inner_txt h3{
+            font-size: 1rem;
+        }
+        .c1_sub ul.sitelist li .inner_txt p{
+            font-size: 0.75rem;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="c1_sub">
+        <div class="container">
+            <div class="c1_list">
+                <ul class="sitelist">
+                    <li>
+                        <a href="https://30krun.com/" target="_blank">
+                            <div class="inner_img">
+                                <img src="https://cdn.imweb.me/upload/S202211080f6c52fa2ac69/e9afadb85b877.png" alt="">
+                            </div>
+                            <div class="inner_txt">
+                                <h3>블루문씨앤씨</h3>
+                                <p>헬스케어 전문 도매몰!</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.domaecos.com/shop/main/index.php" target="_blank">
+                            <div class="inner_img">
+                                <img src="https://cdn.imweb.me/upload/S202211080f6c52fa2ac69/aff3484b634b6.png" alt="">
+                            </div>
+                            <div class="inner_txt">
+                                <h3>도매코스</h3>
+                                <p>기초부터 탄탄한 제품 다량보유</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.beautydome.co.kr/" target="_blank">
+                            <div class="inner_img">
+                                <img src="https://cdn.imweb.me/upload/S202211080f6c52fa2ac69/f34d59dea67a3.png" alt="">
+                            </div>
+                            <div class="inner_txt">
+                                <h3>뷰티도매</h3>
+                                <p>색조와 뷰티제품 전문몰</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://goodbeauty.co.kr/" target="_blank">
+                            <div class="inner_img">
+                                <img src="https://cdn.imweb.me/upload/S202211080f6c52fa2ac69/2c950828750d9.png" alt="">
+                            </div>
+                            <div class="inner_txt">
+                                <h3>조은뷰티</h3>
+                                <p>반영구, 네일아트 전문몰</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://30krun.com/" target="_blank">
+                            <div class="inner_img">
+                                <img src="https://cdn.imweb.me/upload/S202211080f6c52fa2ac69/e9afadb85b877.png" alt="">
+                            </div>
+                            <div class="inner_txt">
+                                <h3>블루문씨앤씨</h3>
+                                <p>헬스케어 전문 도매몰!</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div><!-- //.c1_list -->
+        </div><!-- //.container -->
+    </div><!-- //.c1_sub -->
+</body>
+</html>
