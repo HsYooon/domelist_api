@@ -44,7 +44,7 @@ class Dao:
 
     async def sites(self):
         conn = Tortoise.get_connection("default")
-        sql = '''select * from t_siteinfo where id < 5'''
+        sql = "select * from t_siteinfo where category = '01'"
         val = await conn.execute_query_dict(sql)
         conn.close()
         return val
